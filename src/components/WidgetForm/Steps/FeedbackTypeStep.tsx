@@ -35,7 +35,7 @@ export const FeedbackTypeStep = ({
             }}
           >
             <div className="flex flex-col items-center">
-              {value.image.source}
+              {value.image.icon}
               {/* alt  
           <img src="{value.image.source}" alt="{value.image.alt}" /> */}
               <span className="text-ls leading-6 mt-2">{value.title}</span>
