@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Widget />
-      <Text>marceloOpen up App.tsx to start working on your app!</Text>
+      <Text> Marcelo App test </Text>
       <StatusBar style="light" backgroundColor="transparent" translucent />
     </View>
   );
