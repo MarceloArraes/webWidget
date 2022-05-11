@@ -8,7 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@expo-google-fonts/inter": "^0.2.2",
     "@headlessui/react": "^1.6.1",
+    "expo-app-loading": "^2.0.0",
+    "expo-font": "^10.1.0",
     "html2canvas": "^1.4.1",
     "phosphor-react": "^1.4.1",
     "react": "^18.0.0",
