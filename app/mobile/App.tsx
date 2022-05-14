@@ -3,6 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import {useFonts, Inter_400Regular, Inter_500Medium} from '@expo-google-fonts/inter';
 import { StyleSheet, Text, View } from 'react-native';
 import { Widget } from './src/components/Widget';
+import { useCallback, useEffect } from 'react';
 
 
 export default function App() {
@@ -11,15 +12,26 @@ export default function App() {
     Inter_500Medium
   });
 
- /*  if (!fontsLoaded) {
-    return SplashScreen.preventAutoHideAsync();
-  } */
-  return (
+useEffect(() => {
+  async () => {
+    await SplashScreen.preventAutoHideAsync();
+   
+  }
+}, []);
+
+const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await new Promise (resolve => setTimeout(resolve, 5000));
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+if(!fontsLoaded) {
+  return null;
+}else return (
     <View style={styles.container}>
-      <Text>MARCELO </Text>
-      
+      <Widget />
       <StatusBar style="auto" />
-      <Widget />  
     </View>
   );
 }
