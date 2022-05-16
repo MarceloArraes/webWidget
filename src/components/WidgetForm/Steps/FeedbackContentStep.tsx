@@ -1,13 +1,12 @@
 import {
-  ArrowArcLeft,
-  ArrowElbowLeft,
-  ArrowLeft,
-  Camera,
-} from "phosphor-react";
-import { useState } from "react";
-import { FeedbackType, feedbackTypes } from "..";
-import { CloseButton } from "../../CloseButton";
-import { ScreenshotButton } from "../ScreenshotButton";
+  ArrowLeft
+} from 'phosphor-react'
+import React, { useState } from 'react'
+import { FeedbackType, feedbackTypes } from '..'
+import { api } from '../../../lib/api'
+import { CloseButton } from '../../CloseButton'
+import { Loading } from '../../Loading'
+import { ScreenshotButton } from '../ScreenshotButton'
 
 interface FeedbackContentStepProps {
   feedbackType: FeedbackType;
@@ -18,16 +17,25 @@ interface FeedbackContentStepProps {
 export const FeedbackContentStep = ({
   feedbackType,
   handleRestartFeedback,
-  setFeedbackSent,
+  setFeedbackSent
 }: FeedbackContentStepProps) => {
-  const feedbackTypeInfo = feedbackTypes[feedbackType];
-  const [screenshot, setScreenshot] = useState<string | null>(null);
-  const [comment, setComment] = useState<string | null>(null);
+  const feedbackTypeInfo = feedbackTypes[feedbackType]
+  const [screenshot, setScreenshot] = useState<string | null>(null)
+  const [comment, setComment] = useState<string | null>(null)
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false)
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    console.log({ screenshot, comment });
-    setFeedbackSent(true);
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    setIsSendingFeedback(true)
+
+    await api.post('/feedbacks', {
+      type: feedbackType,
+      comment,
+      screenshot
+    })
+    setIsSendingFeedback(false)
+    setFeedbackSent(true)
   }
 
   return (
@@ -69,10 +77,10 @@ export const FeedbackContentStep = ({
             disabled={!screenshot && !comment}
             className="disabled:opacity-50 disabled:hover:bg-violet-400 p-2 bg-violet-400 rounded-md border-transparent flex-1 justify-center items-center text-sm hover:bg-violet-300 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-offset-violet-800"
           >
-            Enviar
+            {isSendingFeedback ? <Loading/> : 'Enviar'}
           </button>
         </footer>
       </form>
     </>
-  );
-};
+  )
+}
