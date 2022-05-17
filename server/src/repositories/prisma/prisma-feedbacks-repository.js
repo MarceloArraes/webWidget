@@ -4,7 +4,7 @@ exports.PrismaFeedbacksRepository = void 0;
 const prisma_1 = require("../../prisma");
 class PrismaFeedbacksRepository {
     async create({ type, comment, screenshot }) {
-        await prisma_1.prisma.feedback.create({
+        await prisma_1.prisma.feedbacks.create({
             data: {
                 type,
                 comment,
